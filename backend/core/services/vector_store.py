@@ -8,7 +8,10 @@ class VectorStore(ABC):
 class QdrantVectorStore(VectorStore):
     def __init__(self):
         from qdrant_client import QdrantClient
-        self.client=QdrantClient(url=os.getenv("QDRANT_URL","http://localhost:6333"))
+        self.client=QdrantClient(
+            url=os.getenv("QDRANT_URL","http://localhost:6333"),
+            api_key=os.getenv("QDRANT_API_KEY")
+        )
         self.collection=os.getenv("QDRANT_COLLECTION","manaksetu_documents")
     def upsert(self,ids,vectors,payloads):
         from qdrant_client.models import PointStruct
