@@ -123,14 +123,14 @@ export default function Assistant({
   const prompts =
       language === "hi"
         ? [
-            "इलेक्ट्रिक केतली के लिए कौन सा मानक है?",
-            "ISI प्रमाणन के लिए कौन से दस्तावेज़ चाहिए?",
-            "टूथपेस्ट का भारतीय मानक बताएं",
+            "तले हुए आलू के चिप्स के लिए कौन सा मानक है?",
+            "घरेलू प्रेशर कुकर के लिए क्या आवश्यकताएं हैं?",
+            "गर्मी से बचाव वाले कपड़ों के लिए भारतीय मानक बताएं",
           ]
         : [
-            "Which standard applies to an electric kettle?",
-            "What documents are needed for ISI certification?",
-            "Which Indian Standard covers toothpaste?",
+            "Which standard covers fried potato chips?",
+            "What are the requirements for domestic pressure cookers?",
+            "Which Indian Standard applies to protective clothing?",
           ],
     guestLocked = !authenticated && guestUsed >= 6;
   async function openSession(item: Session) {
