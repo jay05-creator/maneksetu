@@ -68,8 +68,8 @@ class MessageCreateView(APIView):
         session = get_object_or_404(ChatSession, public_id=session_id)
         if session.user_id and session.user_id != getattr(request.user,"id",None):
             raise PermissionDenied("This conversation belongs to another account.")
-        if not request.user.is_authenticated and session.messages.filter(role="user").count() >= 10:
-            return Response({"error":{"code":"login_required","message":"Sign in with Google to continue after ten guest questions."}},status=status.HTTP_403_FORBIDDEN)
+        # if not request.user.is_authenticated and session.messages.filter(role="user").count() >= 10:
+        #     return Response({"error":{"code":"login_required","message":"Sign in with Google to continue after ten guest questions."}},status=status.HTTP_403_FORBIDDEN)
         if request.user.is_authenticated and session.user_id is None:
             session.user=request.user
             session.save(update_fields=["user","updated_at"])

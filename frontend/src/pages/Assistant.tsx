@@ -132,7 +132,7 @@ export default function Assistant({
             "What are the requirements for domestic pressure cookers?",
             "Which Indian Standard applies to protective clothing?",
           ],
-    guestLocked = !authenticated && guestUsed >= 10;
+    guestLocked = false;
   async function openSession(item: Session) {
     const full = await api.session(item.public_id);
     setSession(full);
