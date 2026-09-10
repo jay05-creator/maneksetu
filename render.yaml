@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: manaksetu-backend
+    name: certinexus-backend
     plan: free
     env: python
     rootDir: backend

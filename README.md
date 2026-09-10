@@ -72,7 +72,7 @@ cp .env.example .env
 docker compose up -d postgres qdrant
 ```
 
-Set `DATABASE_URL=postgresql://manaksetu:manaksetu@localhost:5432/manaksetu`.
+Set `DATABASE_URL=postgresql://certinexus:certinexus@localhost:5432/certinexus`.
 The local retriever remains the default (`VECTOR_PROVIDER=local`) for a zero-key
 demo. The Qdrant adapter is available for production indexing; configure
 `QDRANT_URL` and `QDRANT_COLLECTION` before enabling it.

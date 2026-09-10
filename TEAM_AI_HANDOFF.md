@@ -1,11 +1,11 @@
-# BIS ManakSathi AI — Team & AI Assistant Handoff
+# BIS Certinexus AI — Team & AI Assistant Handoff
 
 This document is the continuation guide for a teammate, Claude, Codex, or any
 other coding assistant. Read this file before changing the project.
 
 ## Product summary
 
-BIS ManakSathi AI is an independent SIH-oriented prototype for Indian Standards
+BIS Certinexus AI is an independent SIH-oriented prototype for Indian Standards
 discovery, certification guidance, product-to-standard matching, product image
 analysis, testing guidance, laboratory discovery, and consumer help. It is not
 an official BIS service. Never present demo data or an inferred result as an

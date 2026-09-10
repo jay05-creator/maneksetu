@@ -16,7 +16,7 @@ class Command(BaseCommand):
         if not root.exists(): raise CommandError(f"Path does not exist: {root}")
         run = IngestionRun.objects.create(source_path=str(root), status="running")
         try:
-            with tempfile.TemporaryDirectory(prefix="manaksetu-ingest-") as extracted:
+            with tempfile.TemporaryDirectory(prefix="certinexus-ingest-") as extracted:
                 if root.suffix.lower() == ".zip":
                     self.extract_zip(root, Path(extracted))
                     root = Path(extracted)

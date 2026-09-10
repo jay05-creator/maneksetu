@@ -29,7 +29,7 @@ import { api } from "../lib/api";
 import { t } from "../lib/i18n";
 import type { Language, Message, Session } from "../lib/types";
 const openLogin = () =>
-  window.dispatchEvent(new CustomEvent("manaksetu-open-auth"));
+  window.dispatchEvent(new CustomEvent("certinexus-open-auth"));
 interface SpeechResultLike {isFinal:boolean;0:{transcript:string}}
 interface SpeechRecognitionLike {lang:string;interimResults:boolean;continuous:boolean;start:()=>void;stop:()=>void;onresult:((event:{results:ArrayLike<SpeechResultLike>})=>void)|null;onend:(()=>void)|null;onerror:(()=>void)|null}
 type SpeechRecognitionConstructor=new()=>SpeechRecognitionLike;
@@ -47,8 +47,8 @@ export default function Assistant({
     [loading, setLoading] = useState(false),
     [sources, setSources] = useState<Message | null>(null),
     [historyMenu, setHistoryMenu] = useState<{id:string;x:number;y:number} | null>(null),
-    [historyOpen, setHistoryOpen] = useState(()=>localStorage.getItem("manaksetu-history-open")!=="false"),
-    [historyWidth, setHistoryWidth] = useState(()=>Math.min(420,Math.max(180,Number(localStorage.getItem("manaksetu-history-width"))||220))),
+    [historyOpen, setHistoryOpen] = useState(()=>localStorage.getItem("certinexus-history-open")!=="false"),
+    [historyWidth, setHistoryWidth] = useState(()=>Math.min(420,Math.max(180,Number(localStorage.getItem("certinexus-history-width"))||220))),
     [historyNotice, setHistoryNotice] = useState(""),
     [listening,setListening]=useState(false),
     [speakingId,setSpeakingId]=useState<number|null>(null),
@@ -57,10 +57,10 @@ export default function Assistant({
     [dropActive,setDropActive]=useState(false),
     [locating,setLocating]=useState(false),
     [authenticated, setAuthenticated] = useState(
-      Boolean(localStorage.getItem("manaksetu-token")),
+      Boolean(localStorage.getItem("certinexus-token")),
     ),
     [guestUsed, setGuestUsed] = useState(() =>
-      Number(localStorage.getItem("manaksetu-guest-prompts-v2") || 0),
+      Number(localStorage.getItem("certinexus-guest-prompts-v2") || 0),
     );
   const end = useRef<HTMLDivElement>(null);
   const recognitionRef=useRef<SpeechRecognitionLike|null>(null);
@@ -68,7 +68,7 @@ export default function Assistant({
   const imageInputRef=useRef<HTMLInputElement>(null),cameraInputRef=useRef<HTMLInputElement>(null),fileInputRef=useRef<HTMLInputElement>(null);
   const workspaceRef=useRef<HTMLDivElement>(null),resizeStart=useRef({x:0,width:220,last:220,moved:false});
   const loadHistory = useCallback(async () => {
-      if (!localStorage.getItem("manaksetu-token")) {
+      if (!localStorage.getItem("certinexus-token")) {
         setHistory([]);
         return;
       }
@@ -89,12 +89,12 @@ export default function Assistant({
   }, [newChat, loadHistory]);
   useEffect(() => {
     const changed = () => {
-      setAuthenticated(Boolean(localStorage.getItem("manaksetu-token")));
+      setAuthenticated(Boolean(localStorage.getItem("certinexus-token")));
       void loadHistory();
     };
-    window.addEventListener("manaksetu-auth-changed", changed);
+    window.addEventListener("certinexus-auth-changed", changed);
     return () => {
-      window.removeEventListener("manaksetu-auth-changed", changed);
+      window.removeEventListener("certinexus-auth-changed", changed);
     };
   }, [loadHistory]);
   useEffect(() => {
@@ -192,7 +192,7 @@ export default function Assistant({
       } else {
         const next = guestUsed + 1;
         setGuestUsed(next);
-        localStorage.setItem("manaksetu-guest-prompts-v2", String(next));
+        localStorage.setItem("certinexus-guest-prompts-v2", String(next));
       }
     } catch (error) {
       if(error instanceof DOMException&&error.name==="AbortError")return;
@@ -300,7 +300,7 @@ export default function Assistant({
   }
   function finishHistoryResize(event:React.PointerEvent<HTMLElement>){
     if(event.currentTarget.hasPointerCapture(event.pointerId))event.currentTarget.releasePointerCapture(event.pointerId);
-    localStorage.setItem("manaksetu-history-width",String(Math.round(resizeStart.current.last)));
+    localStorage.setItem("certinexus-history-width",String(Math.round(resizeStart.current.last)));
   }
   return (
     <div ref={workspaceRef} style={{"--history-width":`${historyWidth}px`} as CSSProperties} className={`workspace ${historyOpen?'history-open':'history-closed'}`}>
@@ -335,12 +335,12 @@ export default function Assistant({
       </aside>
       {historyMenu&&<button className="history-delete" style={{left:historyMenu.x,top:historyMenu.y}} role="menuitem" onClick={(event)=>removeSession(event,historyMenu.id)} onMouseDown={(event)=>event.stopPropagation()}><Trash2/> Delete conversation</button>}
       {historyOpen&&<div className="history-resize-rail" role="separator" aria-label="Resize chat history" aria-orientation="vertical" onPointerDown={resizeHistory} onPointerMove={moveHistoryResize} onPointerUp={finishHistoryResize}/>}
-      <button className="history-toggle" type="button" aria-label={historyOpen?"Hide chat history":"Show chat history"} title={historyOpen?"Hide history":"Show history"} onClick={()=>setHistoryOpen(current=>{const next=!current;localStorage.setItem("manaksetu-history-open",String(next));return next})}>{historyOpen?<><GripVertical/><ChevronLeft/></>:<ChevronRight/>}</button>
+      <button className="history-toggle" type="button" aria-label={historyOpen?"Hide chat history":"Show chat history"} title={historyOpen?"Hide history":"Show history"} onClick={()=>setHistoryOpen(current=>{const next=!current;localStorage.setItem("certinexus-history-open",String(next));return next})}>{historyOpen?<><GripVertical/><ChevronLeft/></>:<ChevronRight/>}</button>
       <section className={`chat-panel ${dropActive?"drop-active":""}`} onDragEnter={(event)=>{event.preventDefault();setDropActive(true)}} onDragOver={(event)=>event.preventDefault()} onDragLeave={(event)=>{if(!event.currentTarget.contains(event.relatedTarget as Node))setDropActive(false)}} onDrop={(event)=>{event.preventDefault();const file=event.dataTransfer.files[0];if(file)void handleFile(file)}}>
         {dropActive&&<div className="drop-overlay"><Plus/><strong>Drop image or text file</strong><span>Product images will be identified and matched with standards.</span></div>}
         <header className="panel-header">
           <div>
-            <span className="status-dot" /> BIS ManakSathi assistant
+            <span className="status-dot" /> BIS Certinexus assistant
           </div>
           <span>
             {authenticated ? "History enabled" : "Guest · 6 question limit"}

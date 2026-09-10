@@ -12,7 +12,7 @@ class QdrantVectorStore(VectorStore):
             url=os.getenv("QDRANT_URL","http://localhost:6333"),
             api_key=os.getenv("QDRANT_API_KEY")
         )
-        self.collection=os.getenv("QDRANT_COLLECTION","manaksetu_documents")
+        self.collection=os.getenv("QDRANT_COLLECTION","certinexus_documents")
     def upsert(self,ids,vectors,payloads):
         from qdrant_client.models import PointStruct
         self.client.upsert(self.collection,[PointStruct(id=i,vector=v,payload=p) for i,v,p in zip(ids,vectors,payloads,strict=True)])
