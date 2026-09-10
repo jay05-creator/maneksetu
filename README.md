@@ -103,6 +103,13 @@ title, standard number, language, category, source type and URL.
 python backend/manage.py ingest_sources --path data/samples
 ```
 
+ZIP bundles are accepted directly. For user-provided training data, preserve
+its provenance with `--source-type user`:
+
+```bash
+python backend/manage.py ingest_sources --path path/to/data.zip --source-type user
+```
+
 Demo records are intentionally summaries; restricted BIS documents are neither
 scraped nor redistributed. For real deployment, ingest only material for which
 you have permission, preserve source URLs/publication metadata and version every

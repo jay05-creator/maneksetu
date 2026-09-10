@@ -10,6 +10,8 @@ Recommended JSON record:
 {"document_id":"PUBLIC-001","version":1,"title":"Document title","standard_number":"IS 0000:2026","language":"en","category":"ETD","source_type":"official","source_url":"https://example.gov.in/source","content":"..."}
 ```
 
-Run `python backend/manage.py ingest_sources --path path/to/source`. Inspect the
+Run `python backend/manage.py ingest_sources --path path/to/source`. ZIP bundles
+are extracted and ingested directly; use `--source-type user` for supplied
+training data. Inspect the
 `IngestionRun`, `SourceDocument`, and `DocumentChunk` records in Django admin.
 
