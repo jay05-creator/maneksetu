@@ -60,7 +60,7 @@ export default function Assistant({
       Boolean(localStorage.getItem("manaksetu-token")),
     ),
     [guestUsed, setGuestUsed] = useState(() =>
-      Number(localStorage.getItem("manaksetu-guest-prompts") || 0),
+      Number(localStorage.getItem("manaksetu-guest-prompts-v2") || 0),
     );
   const end = useRef<HTMLDivElement>(null);
   const recognitionRef=useRef<SpeechRecognitionLike|null>(null);
@@ -132,7 +132,7 @@ export default function Assistant({
             "What are the requirements for domestic pressure cookers?",
             "Which Indian Standard applies to protective clothing?",
           ],
-    guestLocked = !authenticated && guestUsed >= 6;
+    guestLocked = !authenticated && guestUsed >= 10;
   async function openSession(item: Session) {
     const full = await api.session(item.public_id);
     setSession(full);
@@ -192,7 +192,7 @@ export default function Assistant({
       } else {
         const next = guestUsed + 1;
         setGuestUsed(next);
-        localStorage.setItem("manaksetu-guest-prompts", String(next));
+        localStorage.setItem("manaksetu-guest-prompts-v2", String(next));
       }
     } catch (error) {
       if(error instanceof DOMException&&error.name==="AbortError")return;
