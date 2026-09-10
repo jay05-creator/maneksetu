@@ -1,11 +1,11 @@
 import {BookOpen, Bot, CircleHelp, FileCheck2, Home, Languages, Menu, Search, ShieldCheck, X} from 'lucide-react'
 import {useState,type ReactNode} from 'react'
-import {NavLink} from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
 import type {Language} from '../lib/types'
 import {t} from '../lib/i18n'
 import GoogleAuth from './GoogleAuth'
 
-export function Brand(){return <div className="brand"><img className="bis-logo" src="/assets/bis-logo-strip.png" alt="Bureau of Indian Standards"/><div className="product-name"><strong>BIS ManakSathi <em>AI</em></strong><small>Independent standards assistant</small></div></div>}
+export function Brand(){return <Link to="/" className="brand"><img className="bis-logo" src="/assets/bis-logo-strip.png" alt="Bureau of Indian Standards"/><div className="product-name"><strong>BIS ManakSathi <em>AI</em></strong><small>Independent standards assistant</small></div></Link>}
 export default function AppShell({children,language,setLanguage}:{children:ReactNode;language:Language;setLanguage:(x:Language)=>void}){
  const [open,setOpen]=useState(()=>{const saved=localStorage.getItem('manaksathi-navigation-open');return saved===null?window.innerWidth>720:saved==='true'}); const links=[['/',Home,'home'],['/assistant',Bot,'assistant'],['/standards',Search,'standards'],['/verify',ShieldCheck,'verify'],['/guide',FileCheck2,'guide'],['/consumer',CircleHelp,'consumerHelp']] as const
  const toggleNavigation=()=>setOpen(value=>{const next=!value;localStorage.setItem('manaksathi-navigation-open',String(next));return next})
